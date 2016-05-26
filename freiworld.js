@@ -9,6 +9,12 @@ app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
 app.set('port', process.env.PORT || 3000);
 
+
+var tours = [
+    { id: 0, name: 'Hood River', price: 99.99 },
+    { id: 1, name: 'Oregon Coast', price: 149.95 },
+];
+
 app.set('env','development');
 
 app.disable('x-powered-by');
@@ -26,6 +32,10 @@ app.get('/headers',function(req,res) {
     var s = '';
     for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
     res.send(s);
+});
+
+app.get('/api/tours',function(req,res) {
+    res.json(tours);
 });
 
 app.get('/',function(req,res) {
