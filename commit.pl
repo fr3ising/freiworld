@@ -8,6 +8,14 @@ foreach my $arg ( @ARGV ) {
   $name .= " $arg";
 }
 
-system("git add commit.pl");
+my @files = qw("commit.pl"
+	       "package.json"
+	       "freiworld.js"
+	     );
+
+foreach my $file ( @files ) {
+  system("git add $file");
+}
+
 
 system("git commit -m '$name'\n");
