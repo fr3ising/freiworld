@@ -8,6 +8,11 @@ app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
 app.set('port', process.env.PORT || 3000);
 
+app.use(function(req,res,next) {
+    res.locals.showTests = (app.get('env') !== 'production') && (req.query.test === '1');
+    next();
+});
+
 app.get('/',function(req,res) {
     res.render('home');
 });
