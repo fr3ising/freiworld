@@ -14,7 +14,7 @@ my @files = qw("commit.pl"
 	       "lib/*.js"
 	       "views/*.handlebars"
 	       "views/layouts/*.handlebars"
-	       "-A public/*"
+	       "public/*"
 	     );
 
 foreach my $file ( @files ) {
