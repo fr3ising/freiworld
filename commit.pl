@@ -11,6 +11,7 @@ foreach my $arg ( @ARGV ) {
 my @files = qw("commit.pl"
 	       "package.json"
 	       "freiworld.js"
+	       "lib/*.js"
 	     );
 
 foreach my $file ( @files ) {
