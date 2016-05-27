@@ -4,26 +4,22 @@ var fortune = require('./lib/fortune.js');
 var bodyParser = require('body-parser');
 var credentials = require('./credentials.js');
 var cookieParser = require('cookie-parser');
+var expressSession = require('express-session'));
 
 var app = express();
 
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
 app.set('port', process.env.PORT || 3000);
-
-
-var tours = [
-    { id: 0, name: 'Hood River', price: 99.99 },
-    { id: 1, name: 'Oregon Coast', price: 149.95 },
-];
-
 app.set('env','development');
-
 app.disable('x-powered-by');
 
 app.use(bodyParser.json());                        
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(credentials.cookieSecret));
+app.use(expressSession());
+
+
 
 app.use(function(req,res,next) {
     res.locals.showTests = (app.get('env') !== 'production') && (req.query.test === '1');
