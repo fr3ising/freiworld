@@ -6,6 +6,7 @@ var credentials = require('./credentials.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var database = require('./lib/database.js');
+var formidable = require('formidable');
 
 var app = express();
 
@@ -35,15 +36,21 @@ app.get('/',function(req,res) {
     res.render('home',{"title":"Freiworld homepage"});
 });
 
+app.post('/login',function(req,res) {
+    result = database.signin(req.body.nick,req.body.password);
+    console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+    console.log(result);
+    if ( result ) {
+	console.log("SUCCESS LOGIN AS "+req.body.nick);
+    }
+    console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+    res.redirect('/');
+});
+
 app.get('/signin',function(req,res) {
     res.render('signin',{'title':'Sign in into Freiworld!'});
 });
 
-
-app.post('/login',function(req,res) {
-    console.log(database.userByNick(req.body.nick));
-    
-});
 
 app.get('/about',function(req,res) {
     res.render('about',{
@@ -52,6 +59,7 @@ app.get('/about',function(req,res) {
 	pageTestScript: "/qa/about-tests.js"
     });
 });
+
 
 app.post('/retrieve-video-list', function(req,res) {
     res.set('Content-Type','text/plain');
