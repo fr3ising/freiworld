@@ -1,0 +1,5 @@
+credentials.js
+mysql.json
+node_modules
+.DS_Store
+*~

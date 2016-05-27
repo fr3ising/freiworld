@@ -2,6 +2,8 @@ var express = require('express');
 var handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
 var fortune = require('./lib/fortune.js');
 var bodyParser = require('body-parser');
+var credentials = require('./credentials.js');
+var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -21,6 +23,7 @@ app.disable('x-powered-by');
 
 app.use(bodyParser.json());                        
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser(credentials.cookieSecret));
 
 app.use(function(req,res,next) {
     res.locals.showTests = (app.get('env') !== 'production') && (req.query.test === '1');

@@ -15,6 +15,8 @@ my @files = qw("commit.pl"
 	       "views/*.handlebars"
 	       "views/layouts/*.handlebars"
 	       "public/*"
+	       ".gitignore"
+	       "sql/*"
 	     );
 
 foreach my $file ( @files ) {
