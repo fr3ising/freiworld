@@ -15,6 +15,8 @@ CREATE TABLE users (
               KEY email (email),
        	      KEY karma (karma));
 
+-- INSERT INTO users (nick,password,email) VALUES ("freising",PASSWORD('password'),"freising.denuevo@gmail.com");
+
 DROP TABLE IF EXISTS links;
 CREATE TABLE links (
        id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
