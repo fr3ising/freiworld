@@ -4,7 +4,8 @@ var fortune = require('./lib/fortune.js');
 var bodyParser = require('body-parser');
 var credentials = require('./credentials.js');
 var cookieParser = require('cookie-parser');
-var expressSession = require('express-session'));
+var session = require('express-session');
+var database = require('./lib/database.js');
 
 var app = express();
 
@@ -17,28 +18,31 @@ app.disable('x-powered-by');
 app.use(bodyParser.json());                        
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(credentials.cookieSecret));
-app.use(expressSession());
-
-
+app.use(session({
+    secret: credentials.cookieSecret,
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(function(req,res,next) {
     res.locals.showTests = (app.get('env') !== 'production') && (req.query.test === '1');
     next();
 });
 
-app.get('/headers',function(req,res) {
-    res.set('Content-Type','text/plain');
-    var s = '';
-    for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
-    res.send(s);
-});
-
-app.get('/api/tours',function(req,res) {
-    res.json(tours);
-});
-
 app.get('/',function(req,res) {
+    console.log('Rendering '+req+' to user '+req.session.username);
     res.render('home',{"title":"Freiworld homepage"});
+});
+
+app.get('/signin',function(req,res) {
+    res.render('signin',{'title':'Sign in into Freiworld!'});
+});
+
+
+app.post('/login',function(req,res) {
+    console.log(database.userByNick(req.body.nick));
+    
 });
 
 app.get('/about',function(req,res) {
@@ -56,12 +60,6 @@ app.post('/retrieve-video-list', function(req,res) {
     s += req.body.name;
     console.log('Received video list query for '+ req.body.name + ' <' + req.body.email + '>');
     res.send(s);
-});
-
-app.get('/categories/porn', function(req,res) {
-    res.render('categories/porn',{
-	title: "Porn category"
-    });
 });
 
 app.get('/categories/video-list', function(req,res) {
