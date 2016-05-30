@@ -37,13 +37,16 @@ app.get('/',function(req,res) {
 });
 
 app.post('/login',function(req,res) {
-    result = database.signin(req.body.nick,req.body.password);
-    console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-    console.log(result);
-    if ( result ) {
-	console.log("SUCCESS LOGIN AS "+req.body.nick);
-    }
-    console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+    result = database.signin(req.body.nick,req.body.password,function(err,rows){
+	if ( rows.length > 0 ) {
+	    if ( rows[0].nick === req.body.nick ) {
+		console.log(rows);
+		console.log("SUCCESS");
+	    }
+	} else {
+	    console.log("FAIL");
+	}
+    });
     res.redirect('/');
 });
 
