@@ -48,7 +48,7 @@ app.post('/login',function(req,res) {
 	    }
 	} else {
 	    req.session.nick = null;
-	    req.session.fail = true;
+	    req.session.fail = "Fallo al acceder, comprueba user y password";
 	    req.session.save(function(err) {
 		res.redirect('/signin');
 	    });
@@ -66,6 +66,10 @@ app.get('/signout',function(req,res) {
 
 app.get('/signin',function(req,res) {
     res.render('signin',{'title':'Sign in into Freiworld!','fail':req.session.fail});
+});
+
+app.get('/signup',function(req,res) {
+    res.render('signup',{title:'Sign up into Freiworld!',fail:req.session.fail});
 });
 
 app.get('/about',function(req,res) {
