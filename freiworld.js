@@ -56,6 +56,22 @@ app.post('/login',function(req,res) {
     });
 });
 
+app.post('/register',function(req,res) {
+    if ( req.body.password !== req.body.rpassword ) {
+	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: los passwords no coinciden"});
+    }
+    database.userByNick(req.body.nick,function(err,rows) {
+	if ( rows.length > 0 ) {
+	    res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: nickname ya registrado"});
+	}
+    });
+    database.userByEmail(req.body.email,function(err,rows) {
+	if ( rows.length > 0 ) {
+	    res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: email ya registrado"});
+	}
+    });
+});
+
 app.get('/signout',function(req,res) {
     req.session.nick = null;
     req.session.fail = false;
@@ -65,11 +81,11 @@ app.get('/signout',function(req,res) {
 });
 
 app.get('/signin',function(req,res) {
-    res.render('signin',{'title':'Sign in into Freiworld!','fail':req.session.fail});
+    res.render('signin',{title:'Entrar a Freiworld',fail:req.session.fail});
 });
 
 app.get('/signup',function(req,res) {
-    res.render('signup',{title:'Sign up into Freiworld!',fail:req.session.fail});
+    res.render('signup',{title:'Regístrate en Freiworld',fail:req.session.fail});
 });
 
 app.get('/about',function(req,res) {
