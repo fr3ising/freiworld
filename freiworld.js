@@ -1,6 +1,7 @@
 var express = require('express');
 var handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
 var fortune = require('./lib/fortune.js');
+var aux = require('./lib/aux.js');
 var bodyParser = require('body-parser');
 var credentials = require('./credentials.js');
 var cookieParser = require('cookie-parser');
@@ -57,8 +58,14 @@ app.post('/login',function(req,res) {
 });
 
 app.post('/register',function(req,res) {
+    if ( ! aux.validateEmail(req.body.email) ) {
+	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: email no válido"});
+    }
     if ( req.body.password !== req.body.rpassword ) {
 	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: los passwords no coinciden"});
+    }
+    if ( ! aux.validatePassword(req.body.password) ) {
+	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: el password debe contener al menos 6 dígitos y caracteres"});
     }
     database.userByNick(req.body.nick,function(err,rows) {
 	if ( rows.length > 0 ) {
@@ -69,6 +76,12 @@ app.post('/register',function(req,res) {
 	if ( rows.length > 0 ) {
 	    res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: email ya registrado"});
 	}
+    });
+    database.insertUser(req.body.nick,req.body.email,req.body.password);
+    req.session.nick = req.body.nick;
+    req.session.fail = false;
+    req.session.save(function(err) {
+	res.redirect('/');
     });
 });
 
