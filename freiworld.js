@@ -32,50 +32,41 @@ app.use(function(req,res,next) {
 });
 
 app.get('/',function(req,res) {
-    console.log('Rendering '+req+' to user '+req.session.username);
-    res.render('home',{"title":"Freiworld homepage"});
+    res.render('home',{title:"Freiworld homepage",
+		       nick: req.session.nick});
 });
 
 app.post('/login',function(req,res) {
     result = database.signin(req.body.nick,req.body.password,function(err,rows){
 	if ( rows.length > 0 ) {
 	    if ( rows[0].nick === req.body.nick ) {
-		console.log(rows);
-		console.log("SUCCESS");
+		req.session.nick = rows[0].nick;
+		req.session.fail = false;
+		req.session.save(function(err) {
+		    res.redirect('/');
+		});
 	    }
 	} else {
-	    console.log("FAIL");
+	    req.session.nick = null;
+	    req.session.fail = true;
+	    req.session.save(function(err) {
+		res.redirect('/signin');
+	    });
 	}
     });
-    res.redirect('/');
 });
 
 app.get('/signin',function(req,res) {
-    res.render('signin',{'title':'Sign in into Freiworld!'});
+    res.render('signin',{'title':'Sign in into Freiworld!','fail':req.session.fail});
 });
 
-
 app.get('/about',function(req,res) {
+    console.log(req.session.nick);
     res.render('about',{
 	title: "About Freiworld",
 	fortune: fortune.getFortune(),
-	pageTestScript: "/qa/about-tests.js"
-    });
-});
-
-
-app.post('/retrieve-video-list', function(req,res) {
-    res.set('Content-Type','text/plain');
-    var s = '';
-    for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
-    s += req.body.name;
-    console.log('Received video list query for '+ req.body.name + ' <' + req.body.email + '>');
-    res.send(s);
-});
-
-app.get('/categories/video-list', function(req,res) {
-    res.render('categories/video-list',{
-	title: "Video list"
+	pageTestScript: "/qa/about-tests.js",
+	nick: req.session.nick
     });
 });
 
