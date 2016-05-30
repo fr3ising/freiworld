@@ -1,4 +1,18 @@
-<h1>Welcome to Freiworld</h1>
+<h1>Freiworld</h1>
 
-{{{login_info}}}
-{{{content}}}
+{{content}}
+
+{{#if nick}}
+<p>Logged in as {{nick}}</p>
+<a href="/signout">
+  <button class="btn btn-lg btn-primary btn-block" style="background-color:red" type="submit">Sign out</button>
+</a>
+{{else}}
+<a href="/signin">
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</a>
+<br/>
+<a href="/signup">
+  <button class="btn btn-lg btn-primary btn-block" style="background-color:green" type="submit">Sign up</button>
+</a>
+{{/if}}

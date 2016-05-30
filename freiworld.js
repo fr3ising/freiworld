@@ -56,6 +56,14 @@ app.post('/login',function(req,res) {
     });
 });
 
+app.get('/signout',function(req,res) {
+    req.session.nick = null;
+    req.session.fail = false;
+    req.session.save(function(err) {
+	res.redirect('/');
+    });
+});
+
 app.get('/signin',function(req,res) {
     res.render('signin',{'title':'Sign in into Freiworld!','fail':req.session.fail});
 });
@@ -86,6 +94,3 @@ app.use(function(req,res,next) {
 app.listen(app.get('port'),function() {
     console.log('Express started on http://localhost'+app.get('port')+'; Press Ctrl-C to terminate.');
 });
-
-console.log(fortune.getFortune());
-

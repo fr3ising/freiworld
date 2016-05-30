@@ -12,12 +12,10 @@
     <style> .glyphicon-thumbs-up { cursor:pointer } </style>
   </head>
   <body>
+    <div class="container">
+      {{{body}}}
+    </div>
 
-    {{{body}}}
-
-    {{#if nick}}
-    Logged in as {{{nick}}}
-    {{/if}}
 
     {{#if showTests}}
     <div id="mocha"></div>
