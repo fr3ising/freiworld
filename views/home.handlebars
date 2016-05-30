@@ -1,18 +1,16 @@
-<h1>Freiworld</h1>
-
 {{content}}
 
 {{#if nick}}
-<p>Logged in as {{nick}}</p>
+<p>Conectado como {{nick}}</p>
 <a href="/signout">
-  <button class="btn btn-lg btn-primary btn-block" style="background-color:red" type="submit">Sign out</button>
+  Desconectar
 </a>
 {{else}}
-<a href="/signin">
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<a style="text-align:left" href="/signin">
+  Identificarse
 </a>
-<br/>
-<a href="/signup">
-  <button class="btn btn-lg btn-primary btn-block" style="background-color:green" type="submit">Sign up</button>
+-
+<a style="text-align:right" href="/signup">
+  Registrarse
 </a>
 {{/if}}
