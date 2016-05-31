@@ -1,9 +1,11 @@
+var data_dir = process.env.OPENSHIFT_DATA_DIR || "./";
+
 var express = require('express');
 var handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
 var fortune = require('./lib/fortune.js');
 var aux = require('./lib/aux.js');
 var bodyParser = require('body-parser');
-var credentials = require('~/app-root/data/credentials.js');
+var credentials = require(data_dir+'/credentials.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var database = require('./lib/database.js');
