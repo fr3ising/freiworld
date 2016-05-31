@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS links;
 CREATE TABLE links (
        id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
        user_id INTEGER REFERENCES users(id),
-       uri VARCHAR(256),
+       uri VARCHAR(255),
        title TEXT,
        comment TEXT,
        karma DECIMAL(10,2) DEFAULT '7.00',
