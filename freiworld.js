@@ -7,7 +7,7 @@ var aux = require('./lib/aux.js');
 var bodyParser = require('body-parser');
 var credentials = require(data_dir+'/credentials.js');
 var cookieParser = require('cookie-parser');
-var session = require('cookie-session');
+var session = require('express-session');
 var database = require('./lib/database.js');
 var formidable = require('formidable');
 
