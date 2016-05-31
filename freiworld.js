@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var credentials = require(data_dir+'/credentials.js');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var fileStore = require('session-file-store')(session);
 var database = require('./lib/database.js');
 var formidable = require('formidable');
 
@@ -29,6 +30,7 @@ app.use(session({
     secret: credentials.cookieSecret,
     proxy: true,
     resave: true,
+    store: new fileStore,
     saveUninitialized: true
 }));
 
