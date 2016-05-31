@@ -9,11 +9,14 @@ var session = require('express-session');
 var database = require('./lib/database.js');
 var formidable = require('formidable');
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 var app = express();
 
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
-app.set('port', process.env.PORT || 3000);
+app.set('port', server_port);
 app.set('env','development');
 app.disable('x-powered-by');
 
@@ -124,6 +127,6 @@ app.use(function(req,res,next) {
     res.render('500');
 });
 
-app.listen(app.get('port'),function() {
+app.listen(app.get('port'),server_ip_address,function() {
     console.log('Express started on http://localhost'+app.get('port')+'; Press Ctrl-C to terminate.');
 });
