@@ -127,8 +127,6 @@ app.use(function(req,res,next) {
     res.render('500');
 });
 
-console.log("TRACA = " +app.get('port'));
-
 app.listen(app.get('port'),server_ip_address,function() {
     console.log('Express started on http://localhost'+app.get('port')+'; Press Ctrl-C to terminate.');
 });
