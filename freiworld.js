@@ -44,7 +44,7 @@ app.get('/',function(req,res) {
 
 app.post('/login',function(req,res) {
     result = database.signin(req.body.nick,req.body.password,function(err,rows){
-	if ( rows.length > 0 ) {
+	if ( rows && rows.length > 0 ) {
 	    if ( rows[0].nick === req.body.nick ) {
 		req.session.nick = rows[0].nick;
 		req.session.fail = false;
@@ -73,12 +73,12 @@ app.post('/register',function(req,res) {
 	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: el password debe contener al menos 6 dígitos y caracteres"});
     }
     database.userByNick(req.body.nick,function(err,rows) {
-	if ( rows.length > 0 ) {
+	if ( rows && rows.length > 0 ) {
 	    res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: nickname ya registrado"});
 	}
     });
     database.userByEmail(req.body.email,function(err,rows) {
-	if ( rows.length > 0 ) {
+	if ( rows && rows.length > 0 ) {
 	    res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: email ya registrado"});
 	}
     });
