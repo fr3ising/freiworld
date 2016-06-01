@@ -63,41 +63,38 @@ app.post('/login',function(req,res) {
     });
 });
 
-app.post('/register',function(req,res) {
-    if ( ! aux.validateEmail(req.body.email) ) {
-	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: email no válido"});
-    }
-    if ( req.body.password !== req.body.rpassword ) {
-	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: los passwords no coinciden"});
-    }
-    if ( ! aux.validatePassword(req.body.password) ) {
-	res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: el password debe contener al menos 6 dígitos y caracteres"});
-    }
-    database.userByNick(req.body.nick,function(err,rows) {
-	if ( !err ) {
-	    if ( rows.length > 0 ) {
-		res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: nickname ya registrado"});
-	    }
-	} else {
-	    console.log(err);
-	}
-    });
-    database.userByEmail(req.body.email,function(err,rows) {
-	if ( !err ) {
-	    if ( !rows && rows.length > 0 ) {
-		res.render('signup',{title:'Regístrate en Freiworld',fail:"Error: email ya registrado"});
-	    }
-	} else {
-	    console.log(err);
-	}
-    });
-    database.insertUser(req.body.nick,req.body.email,req.body.password);
-    req.session.nick = req.body.nick;
-    req.session.fail = false;
-    req.session.save(function(err) {
-	res.redirect('/');
-    });
-});
+
+//     if ( ! aux.validatePassword(req.body.password) ) {
+// 	res.render('signup',
+// 		   {title:'Regístrate en Freiworld',fail:"Error: el password debe contener al menos 6 dígitos y caracteres"});
+//     }
+//     database.userByNick(req.body.nick,function(err,rows) {
+// 	if ( !err ) {
+// 	    if ( rows.length > 0 ) {
+// 		console.log("ERROR CON NICK EXISTENTE");
+// 		res.render('signup',
+// 			   {title:'Regístrate en Freiworld',fail:"Error: nickname ya registrado"});
+// 		res.end();
+// 	    }
+// 	} else {
+// 	    console.log(err);
+// 	}
+//     });
+//     database.userByEmail(req.body.email,function(err,rows) {
+// 	if ( !err ) {
+// 	    if ( rows.length > 0 ) {
+// 		console.log("ERROR CON MAIL EXISTENTE");
+// 		res.render('signup',
+// 			   {title:'Regístrate en Freiworld',fail:"Error: email ya registrado"});
+// 	    }
+// 	} else {
+// 	    console.log(err);
+// 	}
+//     });
+// });
+
+var registerRoutes = require('./lib/registerRoutes.js');
+registerRoutes(app);
 
 app.get('/signout',function(req,res) {
     req.session.nick = null;
