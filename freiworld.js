@@ -1,5 +1,4 @@
 var data_dir = process.env.OPENSHIFT_DATA_DIR || "./";
-
 var express = require('express');
 var handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
 var fortune = require('./lib/fortune.js');
@@ -138,7 +137,6 @@ app.use(function(req,res,next) {
     res.status(500);
     res.render('500');
 });
-
 
 app.listen(app.get('port'),server_ip_address,function() {
     console.log('Express started on http://localhost'+app.get('port')+'; Press Ctrl-C to terminate.');
