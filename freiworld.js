@@ -80,6 +80,7 @@ app.get('/link/:id',function(req,res) {
 				linkTitle: rows[0].title,
 				uri: rows[0].uri,
 				comment: rows[0].comment,
+				linkNick: rows[0].nick,
 				fail:false,
 				nick: req.session.nick
 			      });
