@@ -44,7 +44,7 @@ app.get('/',function(req,res) {
 });
 
 app.post('/login',function(req,res) {
-    result = database.signin(req.body.nick,req.body.password,function(err,rows){
+    database.signin(req.body.nick,req.body.password,function(err,rows){
 	if ( rows && rows.length > 0 ) {
 	    if ( rows[0].nick === req.body.nick ) {
 		req.session.nick = rows[0].nick;
@@ -63,38 +63,15 @@ app.post('/login',function(req,res) {
     });
 });
 
-
-//     if ( ! aux.validatePassword(req.body.password) ) {
-// 	res.render('signup',
-// 		   {title:'Regístrate en Freiworld',fail:"Error: el password debe contener al menos 6 dígitos y caracteres"});
-//     }
-//     database.userByNick(req.body.nick,function(err,rows) {
-// 	if ( !err ) {
-// 	    if ( rows.length > 0 ) {
-// 		console.log("ERROR CON NICK EXISTENTE");
-// 		res.render('signup',
-// 			   {title:'Regístrate en Freiworld',fail:"Error: nickname ya registrado"});
-// 		res.end();
-// 	    }
-// 	} else {
-// 	    console.log(err);
-// 	}
-//     });
-//     database.userByEmail(req.body.email,function(err,rows) {
-// 	if ( !err ) {
-// 	    if ( rows.length > 0 ) {
-// 		console.log("ERROR CON MAIL EXISTENTE");
-// 		res.render('signup',
-// 			   {title:'Regístrate en Freiworld',fail:"Error: email ya registrado"});
-// 	    }
-// 	} else {
-// 	    console.log(err);
-// 	}
-//     });
-// });
-
 var registerRoutes = require('./lib/registerRoutes.js');
 registerRoutes(app);
+
+var postLinkRoutes = require('./lib/postLinkRoutes.js');
+postLinkRoutes(app);
+
+app.get('/sendLink',function(req,res) {
+    res.render('sendLink',{ title: 'Enviar noticia',fail:false,nick:req.session.nick});
+});
 
 app.get('/signout',function(req,res) {
     req.session.nick = null;
