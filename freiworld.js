@@ -73,17 +73,23 @@ registerRoutes(app);
 var postLinkRoutes = require('./lib/postLinkRoutes.js');
 postLinkRoutes(app);
 
+var postCommentRoutes = require('./lib/postCommentRoutes.js');
+postCommentRoutes(app);
+
 app.get('/link/:id',function(req,res) {
-    database.linkById(req.params.id,function(err,rows) {
+    database.linkById(req.params.id,function(err,info) {
 	if ( !err ) {
+	    rows = info.rows;
 	    res.render('link',{ title: rows[0].title,
 				linkTitle: rows[0].title,
 				uri: rows[0].uri,
 				comment: rows[0].comment,
 				linkNick: rows[0].nick,
 				fail:false,
+				linkId: rows[0].id,
 				idate:rows[0].idate,
-				nick: req.session.nick
+				nick: req.session.nick,
+				comments: info.comments
 			      });
 	} else {
 	    res.redirect('500');

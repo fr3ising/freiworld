@@ -9,7 +9,17 @@
       {{#if fail}}
       <p style="text-align:center;color:red">{{fail}}</p>
       {{/if}}
-      <input type="hidden" name="linkId" value="{{linkId}}"></input>
+      {{#if comments}}
+      <p style="text-align:center;color:orange">----- COMENTARIOS -----</p>
+      {{/if}}
+      {{#each comments}}
+      <p>{{this.comment}}</p>
+      <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
+      <hr/>
+      {{/each}}
+
+
+      <input type="hidden" name="linkId" value="{{linkId}}"/>
       <textarea style="width:240px" id="comment" name="comment" class="form-control" 
 		placeholder="Comentario" rows="8" 
 		required>{{linkComment}}</textarea>
