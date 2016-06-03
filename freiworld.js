@@ -82,6 +82,7 @@ app.get('/link/:id',function(req,res) {
 				comment: rows[0].comment,
 				linkNick: rows[0].nick,
 				fail:false,
+				idate:rows[0].idate,
 				nick: req.session.nick
 			      });
 	} else {

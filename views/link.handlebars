@@ -1,7 +1,21 @@
 <div class="container">
-
-<h1><a href="{{uri}}">{{linkTitle}}</a></h1>
-<p style="text-align:right;color:olive"><i>Enviado por {{linkNick}}</i></p>
-<p>{{comment}}</p>
-
+  
+  <h1><a href="{{uri}}">{{linkTitle}}</a></h1>
+  <p style="text-align:right;color:olive"><i>Enviado por {{linkNick}} - {{idate}}</i></p>
+  <p>{{comment}}</p>
+  {{#if nick}}
+  <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/postComment">
+    <center>
+      {{#if fail}}
+      <p style="text-align:center;color:red">{{fail}}</p>
+      {{/if}}
+      <input type="hidden" name="linkId" value="{{linkId}}"></input>
+      <textarea style="width:240px" id="comment" name="comment" class="form-control" 
+		placeholder="Comentario" rows="8" 
+		required>{{linkComment}}</textarea>
+      <br/>
+      <button style="width:240px" class="btn btn-lg btn-primary btn-block" type="submit">Comentar</button>
+    </center>
+  </form>
+  {{/if}}
 </div>
