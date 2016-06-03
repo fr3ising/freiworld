@@ -8,7 +8,8 @@ foreach my $arg ( @ARGV ) {
   $name .= " $arg";
 }
 
-my @files = qw("commit.pl"
+my @files = qw("LICENSE"
+	       "commit.pl"
 	       "package.json"
 	       "freiworld.js"
 	       "lib/*.js"
