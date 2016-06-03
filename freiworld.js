@@ -39,8 +39,12 @@ app.use(function(req,res,next) {
 });
 
 app.get('/',function(req,res) {
-    res.render('home',{title:"Freiworld homepage",
-		       nick: req.session.nick});
+    database.lastLinks(10,function(err,rows) {
+	res.render('home',{
+	    title:"Freiworld homepage",
+	    nick: req.session.nick,
+	    links: rows});
+    });
 });
 
 app.post('/login',function(req,res) {
@@ -68,6 +72,22 @@ registerRoutes(app);
 
 var postLinkRoutes = require('./lib/postLinkRoutes.js');
 postLinkRoutes(app);
+
+app.get('/link/:id',function(req,res) {
+    database.linkById(req.params.id,function(err,rows) {
+	if ( !err ) {
+	    res.render('link',{ title: rows[0].title,
+				linkTitle: rows[0].title,
+				uri: rows[0].uri,
+				comment: rows[0].comment,
+				fail:false,
+				nick: req.session.nick
+			      });
+	} else {
+	    res.redirect('500');
+	}
+    });
+});
 
 app.get('/sendLink',function(req,res) {
     res.render('sendLink',{ title: 'Enviar noticia',fail:false,nick:req.session.nick});

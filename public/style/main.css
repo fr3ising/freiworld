@@ -5,6 +5,15 @@ body {
   text-align:center;
 }
 
+h1 {
+    font-size:12pt;
+}
+
+p {
+    font-size:10pt;
+}
+    
+
 button {
     text-align:center;
 };
@@ -18,4 +27,9 @@ a.hover {
     width: auto;
     max-width: 300px;
     text-align:center;
+}
+
+p {
+    text-align: justify;
+    text-justify: inter-word;
 }
