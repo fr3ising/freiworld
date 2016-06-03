@@ -1,20 +1,22 @@
 <div class="container">
   {{#if nick}}
   <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/postLink">
-    {{#if fail}}
-    <p style="text-align:center;color:red">{{fail}}</p>
-    {{/if}}
-    <input id="uri" name="uri" class="form-control" placeholder="Url" 
-	   value="{{uri}}" required></input>
-    <br/>
-    <input id="linkTitle" name="linkTitle" class="form-control" placeholder="Título" 
-	   value="{{linkTitle}}" required></input>
-    <br/>
-    <textarea id="comment" name="comment" class="form-control" 
-	      placeholder="Entradilla" rows="10" 
-	      required>{{comment}}</textarea>
-    <br/>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+    <center>
+      {{#if fail}}
+      <p style="text-align:center;color:red">{{fail}}</p>
+      {{/if}}
+      <input style="width:200px" id="uri" name="uri" class="form-control" placeholder="Url" 
+	     value="{{uri}}" required></input>
+      <br/>
+      <input style="width:200px" id="linkTitle" name="linkTitle" class="form-control" placeholder="Título" 
+	     value="{{linkTitle}}" required></input>
+      <br/>
+      <textarea style="width:200px" id="comment" name="comment" class="form-control" 
+		placeholder="Entradilla" rows="10" 
+		required>{{comment}}</textarea>
+      <br/>
+      <button style="width:200px" class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+    </center>
   </form>
   {{else}}
   <p style="text-align:center;color:red">Debes estar conectado para poder enviar links</p>

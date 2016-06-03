@@ -5,6 +5,10 @@ body {
   text-align:center;
 }
 
+button {
+    text-align:center;
+};
+
 a.hover {
     text-decoration:none;
     border:no-border;
@@ -13,4 +17,5 @@ a.hover {
 .container {
     width: auto;
     max-width: 300px;
+    text-align:center;
 }
