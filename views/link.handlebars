@@ -1,31 +1,30 @@
 <div class="container">
-  
   <h1><a href="{{uri}}">{{linkTitle}}</a></h1>
   <p style="text-align:right;color:olive"><i>Enviado por {{linkNick}} - {{idate}}</i></p>
   <p>{{comment}}</p>
-  {{#if nick}}
-  <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/postComment">
-    <center>
-      {{#if fail}}
-      <p style="text-align:center;color:red">{{fail}}</p>
-      {{/if}}
-      {{#if comments}}
-      <p style="text-align:center;color:orange">----- COMENTARIOS -----</p>
-      {{/if}}
-      {{#each comments}}
-      <p>{{this.comment}}</p>
-      <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
-      <hr/>
-      {{/each}}
+  <center>
+    {{#if fail}}
+    <p style="text-align:center;color:red">{{fail}}</p>
+    {{/if}}
+    {{#if comments}}
+    <p style="text-align:center;color:orange">----- COMENTARIOS -----</p>
+    {{/if}}
+    {{#each comments}}
+    <p>{{this.comment}}</p>
+    <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
+    <hr/>
+    {{/each}}
 
 
+    {{#if nick}}
+    <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/postComment">
       <input type="hidden" name="linkId" value="{{linkId}}"/>
       <textarea style="width:240px" id="comment" name="comment" class="form-control" 
 		placeholder="Comentario" rows="8" 
 		required>{{linkComment}}</textarea>
       <br/>
       <button style="width:240px" class="btn btn-lg btn-primary btn-block" type="submit">Comentar</button>
-    </center>
-  </form>
+    </form>
+  </center>
   {{/if}}
 </div>
