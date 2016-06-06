@@ -39,12 +39,35 @@ app.use(function(req,res,next) {
 });
 
 app.get('/',function(req,res) {
+    req.session.fail = false;
     database.lastLinks(10,function(err,rows) {
 	res.render('home',{
 	    title:"Freiworld homepage",
 	    nick: req.session.nick,
 	    links: rows});
     });
+});
+
+app.get('/changePassword',function(req,res) {
+    res.render('changePassword',{
+	title:"Cambiar contraseña",
+	nick: req.session.nick});
+});
+
+app.post('/updatePassword',function(req,res) {
+    if ( req.body.password === req.body.rpassword ) {
+	database.updatePassword(req.session.nick,req.body.password,
+				function(err,rows) {
+				    res.render('home',{
+					title: "Freiworld homepage",
+					nick: req.session.nick,
+					msg: "Password actualizado"});
+				});
+    } else {
+	res.render('changePassword',{title: "Cambiar contraseña",
+				     nick: req.session.nick,
+				     fail: "Error: las contraseñas no coinciden"});
+    }
 });
 
 app.post('/login',function(req,res) {
@@ -59,7 +82,7 @@ app.post('/login',function(req,res) {
 	    }
 	} else {
 	    req.session.nick = null;
-	    req.session.fail = "Fallo al acceder, comprueba user y password";
+	    req.session.fail = "Fallo al acceder, comprueba nickname y password";
 	    req.session.save(function(err) {
 		res.redirect('/signin');
 	    });
@@ -67,8 +90,16 @@ app.post('/login',function(req,res) {
     });
 });
 
+app.get('/passwordRecovery',function(req,res) {
+    req.session.fail = false;
+    res.render('passwordRecovery',{ title: "Recuperación de contraseña" });
+});
+
 var registerRoutes = require('./lib/registerRoutes.js');
 registerRoutes(app);
+
+var sendPasswordRoutes = require('./lib/sendPasswordRoutes.js');
+sendPasswordRoutes(app);
 
 var postLinkRoutes = require('./lib/postLinkRoutes.js');
 postLinkRoutes(app);

@@ -16,6 +16,10 @@
       <img style="width:281;height:67" src="/logo.png" alt="Freiworld"/>
     </a>
     <div style="margin-top:20px" class="container">
+      {{#if msg}}
+      <center><p style="font-size:11pt;text-align:center;color:olive">{{msg}}</p>
+      </center>
+      {{/if}}
       {{{body}}}
     </div>
     {{#if showTests}}
