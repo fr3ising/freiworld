@@ -1,9 +1,9 @@
 $("#submitmsg").click(
     function(){  
 	var message = $("#message").val();
-	var nick = $("#nick").val();
-	$.post("/postChat",{message:message,nick:nick});
+	$("#message").val('');
 	$("#message").attr("value", "");  
+	$.post("/postChat",{message:message});
 	return false;  
     });  
 
@@ -25,6 +25,6 @@ function loadLog(){
 //     setInterval (loadLog, 100000*10);
 // }
 
-setInterval (loadLog, 5000*1);
+setInterval (loadLog, 3000*1);
 loadLog();
 

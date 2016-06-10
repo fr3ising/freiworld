@@ -61,8 +61,15 @@ app.get('/chat',function(req,res) {
 });
 
 app.post('/postChat',function(req,res) {
-    console.log("HOLASKD");
-    console.log(req.body.nick+': '+req.body.message);
+    database.insertChat(
+	req.body.message,req.session.nick,
+	function(err,rows) {
+	    if ( err ) {
+		res.redirect('500');
+	    } else {
+		res.end();
+	    }
+	});
 });
 
 app.post('/updatePassword',function(req,res) {
@@ -117,6 +124,14 @@ postLinkRoutes(app);
 
 var postCommentRoutes = require('./lib/postCommentRoutes.js');
 postCommentRoutes(app);
+
+app.get('/chatDisplay',function(req,res) {
+    database.lastChats(30,function(err,rows) {
+	res.render('chatbox',{
+	    nick: req.session.nick,
+	    chats: rows,layout: false});
+    });
+});
 
 app.get('/link/:id',function(req,res) {
     database.linkById(req.params.id,function(err,info) {
