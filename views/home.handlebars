@@ -1,4 +1,11 @@
 <div class="container">
+  {{#if nick}}
+  <br/>
+  <a href="/chat" style="width:240px;text-align:left" class="btn btn-success btn-lg">
+    <span class="glyphicon glyphicon-fire" style="margin-right:30px"></span> Chat
+  </a>
+  <br/>
+  {{/if}}
   {{#each links}}
   <h1><a href="/link/{{this.id}}">{{this.title}}</a></h1>
   <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>

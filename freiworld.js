@@ -54,6 +54,17 @@ app.get('/changePassword',function(req,res) {
 	nick: req.session.nick});
 });
 
+app.get('/chat',function(req,res) {
+    res.render('chat',{
+	title:"Chat de Freiworld",
+	nick: req.session.nick});
+});
+
+app.post('/postChat',function(req,res) {
+    console.log("HOLASKD");
+    console.log(req.body.nick+': '+req.body.message);
+});
+
 app.post('/updatePassword',function(req,res) {
     if ( req.body.password === req.body.rpassword ) {
 	database.updatePassword(req.session.nick,req.body.password,
