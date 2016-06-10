@@ -19,6 +19,7 @@ function loadLog(){
     });  
 }  
 
+
 // window.onblur=lostfocus;
 
 // function lostfocus(e) {
