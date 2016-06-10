@@ -1,11 +1,3 @@
-$("#submitmsg").click(
-    function(){  
-	var message = $("#message").val();
-	$("#message").val('');
-	$("#message").attr("value", "");  
-	$.post("/postChat",{message:message});
-	return false;  
-    });  
 
 function loadLog(){  
     var oldscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height before the request  
@@ -18,6 +10,16 @@ function loadLog(){
         },  
     });  
 }  
+
+$("#submitmsg").click(
+    function(){  
+	var message = $("#message").val();
+	$("#message").val('');
+	$("#message").attr("value", "");  
+	$.post("/postChat",{message:message});
+	loadLog();
+	return false;  
+    });  
 
 
 // window.onblur=lostfocus;
