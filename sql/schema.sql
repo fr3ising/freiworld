@@ -37,9 +37,29 @@ CREATE TABLE comments (
        comment TEXT,
        karma DECIMAL(10,2) DEFAULT '7.00');
 
-DROP TABLE IF EXISTS chats;
+-- DROP TABLE IF EXISTS chats;
 CREATE TABLE chats (
        id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
        user_id INTEGER REFERENCES users(id),
        idate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        message TEXT);
+
+ALTER TABLE chats ADD uri VARCHAR(255);
+ALTER TABLE links ADD status enum('discard','queued','published','abuse','duplicated','autodiscard','metapublished') CHARACTER SET utf8 NOT NULL DEFAULT 'queued';
+
+CREATE TABLE votes (
+       id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+       user_id INTEGER REFERENCES users(id),
+       link_id INTEGER REFERENCES links(id),
+       karma DECIMAL(10,2),
+       idate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+
+CREATE TABLE cvotes (
+       id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+       user_id INTEGER REFERENCES users(id),
+       comment_id INTEGER REFERENCES comments(id),
+       karma DECIMAL(10,2),
+       idate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+
+
+       

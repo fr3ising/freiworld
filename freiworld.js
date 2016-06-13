@@ -62,7 +62,7 @@ app.get('/chat',function(req,res) {
 
 app.post('/postChat',function(req,res) {
     database.insertChat(
-	req.body.message,req.session.nick,
+	req.body.message,req.session.nick,false,
 	function(err,rows) {
 	    if ( err ) {
 		res.redirect('500');
